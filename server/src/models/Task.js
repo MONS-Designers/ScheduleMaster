@@ -1,4 +1,4 @@
-const level = require("./ImportanceLevel")
+const importanceLevel = require("./ImportanceLevel");
 const mongoose = require("mongoose")
 const taskSchcema = new mongoose.Schema({
     title: {
@@ -13,10 +13,10 @@ const taskSchcema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    imprtanceLevel: {
+    importanceLevel: {
         type: mongoose.ObjectId,
         required: true,
-        ref: level
+        ref: importanceLevel
     }
 }, {
     timestamps: true

@@ -7,9 +7,9 @@ const taskController=require(`../../controllers/taskController`)
 // const verifyJWT=require("../middleware/verityJWT")
 // router.use(verifyJWT)
 
-router.post("tasks",taskController.createNewTask)
-router.get("tasks/:title/:description/:finished/:importanceLevel/:endDate/",taskController.getTaskByParameters)
-router.put(`tasks/`,taskController.updateTask)
-router.delete(`tasks/`,taskController.deleteTask)
+router.post("/",taskController.createNewTask)
+router.get("/:title/:description/:finished/:importanceLevel/:endDate/",taskController.getTaskByParameters)
+router.put(`/`,taskController.updateTask)
+router.delete(`/`,taskController.deleteTask)
 
 module.exports=router

@@ -44,7 +44,7 @@ const updateTask = async (req, res) => {
 
 const getTaskByParameters = async (req, res) => {
 console.log("getTaskByParameters");
-    const { title, description, finished, importanceLevel } = req.body
+    const { title, description, finished, importanceLevel } = req.params
 
     const conditions = {};
     if (title) {
