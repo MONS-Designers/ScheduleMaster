@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+
+  server:
+    image: mcr.microsoft.com/dotnet/aspnet:${DOTNET_TAG}
+    container_name: server
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    volumes:
+      - ./server:/app
+    depends_on:
+      - postgres
+    tty: true
+
+  client:
+    image: node:${REACT_TAG}
+    container_name: client
+    ports:
+      - ${REACT_PORT}:${REACT_PORT}
+    volumes:
+      - ./client:/app
+    tty: true
+
+  postgres:
+    image: postgres:${POSTGRES_TAG}
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
