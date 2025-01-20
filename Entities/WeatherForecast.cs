@@ -1,4 +1,4 @@
-namespace ScheduleMasterServer
+namespace Entities
 {
     public class WeatherForecast
     {
