@@ -10,6 +10,7 @@
 ## User-specific folders
 .vscode/
 .vs/
+/.vs
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
