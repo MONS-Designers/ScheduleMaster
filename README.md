@@ -11,17 +11,6 @@ The repository contains projects for server & client sides.
 - **Frontend:** React
 - **DB:** PostgreSQL
 
-## 🔧 Configuration
-
-The `.env` file contains environment settings for the application.
-You can customize them to your own needs.
-All what you need to do is:
-
-1. **Editing the .env File:** Find the `.env` file  which located in the main project directory and open it using a text editor of your choice.
-2. **Environment Variables:** Find the specific key that you want to edit, and customize it's value.
-For example, if you want to change the value of the `PORT` key to a different port (e.g. because you want to set your application run port), just change the value.
-3. **Saving Changes:** Save the changes you made to the `.env` file after modifying the variables.
-
 ## 🔧 Installation
 
 Each project in this repo contains its own installation commands, please follow the instructions in the specific projects' documentation.
