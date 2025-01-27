@@ -24,4 +24,4 @@ jobs:
         run: dotnet test --no-restore --verbosity normal
         
       - name: 💄 Run linter
-        run: dotnet format --check
+        run: dotnet format ../../../ScheduleMasterServer.sln --check
