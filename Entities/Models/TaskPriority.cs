@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Entities.Models;
+
+/// <summary>
+/// Code table
+/// </summary>
+public partial class TaskPriority
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();
+}

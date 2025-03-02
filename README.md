@@ -1,6 +1,5 @@
 # ScheduleMaster
 
-
 ## 🚀 Overview
 This repository implements schedule management, include tasks and teams managment.
 The repository contains projects for server & client sides.
@@ -8,7 +7,7 @@ The repository contains projects for server & client sides.
 ## 💻 Technologies Used
 
 - **Backend:** .Net core 8.0
-- **Frontend:** React
+- **Frontend:** ReactTS 19
 - **DB:** PostgreSQL
 
 ## 🔧 Installation
