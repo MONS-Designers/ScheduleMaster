@@ -11,6 +11,7 @@
 
 .gradient-text {
   background: linear-gradient(90deg, #B0DAEE, #EDBCC4, #F0CCA3, #FDE7AC, #FEF0CE);
+  background-clip: padding-box;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: transform 0.3s ease;
