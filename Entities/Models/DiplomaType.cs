@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace Entities.Models;
+
 /// <summary>
 /// Code table
 /// BeD, CV etc.
@@ -10,7 +11,7 @@ public partial class DiplomaType
 {
     public int Id { get; set; }
 
-    public int Name { get; set; }
+    public string Name { get; set; } = null!;
 
     public virtual ICollection<DiplomaTeacher> DiplomaTeachers { get; set; } = new List<DiplomaTeacher>();
 }

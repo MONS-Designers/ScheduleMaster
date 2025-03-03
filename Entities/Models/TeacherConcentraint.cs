@@ -17,7 +17,7 @@ public partial class TeacherConcentraint
 
     public TimeOnly? EndHour { get; set; }
 
-    public int TeacherId { get; set; }
+    public int ManagerSchoolTeacherId { get; set; }
 
-    public virtual Teacher Teacher { get; set; } = null!;
+    public virtual ManagerSchoolTeacher ManagerSchoolTeacher { get; set; } = null!;
 }

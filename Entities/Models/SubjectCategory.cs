@@ -12,7 +12,7 @@ public partial class SubjectCategory
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<SchoolGroup> SchoolGroups { get; set; } = new List<SchoolGroup>();
+    public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
 
     public virtual ICollection<Subject> Subjects { get; set; } = new List<Subject>();
 }

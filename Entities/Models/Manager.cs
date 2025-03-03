@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 
 namespace Entities.Models;
+
 public partial class Manager
 {
     public int Id { get; set; }
 
-    public int SchoolUserId { get; set; }
+    public int UserId { get; set; }
 
-    public virtual ICollection<ManagerTeacher> ManagerTeachers { get; set; } = new List<ManagerTeacher>();
+    public virtual ICollection<SchoolManager> SchoolManagers { get; set; } = new List<SchoolManager>();
 
-    public virtual SchoolUser SchoolUser { get; set; } = null!;
+    public virtual SchoolManager User { get; set; } = null!;
 }

@@ -24,15 +24,21 @@ public partial class ScheduleMasterContext : DbContext
 
     public virtual DbSet<DiplomaType> DiplomaTypes { get; set; }
 
+    public virtual DbSet<EmploymentType> EmploymentTypes { get; set; }
+
+    public virtual DbSet<Group> Groups { get; set; }
+
     public virtual DbSet<Manager> Managers { get; set; }
 
-    public virtual DbSet<ManagerTeacher> ManagerTeachers { get; set; }
+    public virtual DbSet<ManagerSchoolTeacher> ManagerSchoolTeachers { get; set; }
 
     public virtual DbSet<Note> Notes { get; set; }
 
     public virtual DbSet<PlacementStatus> PlacementStatuses { get; set; }
 
     public virtual DbSet<Presence> Presences { get; set; }
+
+    public virtual DbSet<Priority> Priorities { get; set; }
 
     public virtual DbSet<Schedule> Schedules { get; set; }
 
@@ -44,9 +50,9 @@ public partial class ScheduleMasterContext : DbContext
 
     public virtual DbSet<School> Schools { get; set; }
 
-    public virtual DbSet<SchoolGroup> SchoolGroups { get; set; }
+    public virtual DbSet<SchoolManager> SchoolManagers { get; set; }
 
-    public virtual DbSet<SchoolUser> SchoolUsers { get; set; }
+    public virtual DbSet<SchoolSecretary> SchoolSecretaries { get; set; }
 
     public virtual DbSet<Secretary> Secretaries { get; set; }
 
@@ -62,17 +68,15 @@ public partial class ScheduleMasterContext : DbContext
 
     public virtual DbSet<Task> Tasks { get; set; }
 
-    public virtual DbSet<TaskPriority> TaskPriorities { get; set; }
-
     public virtual DbSet<Teacher> Teachers { get; set; }
 
     public virtual DbSet<TeacherConcentraint> TeacherConcentraints { get; set; }
 
+    public virtual DbSet<TeacherEmployment> TeacherEmployments { get; set; }
+
     public virtual DbSet<TeacherSubject> TeacherSubjects { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-
-    public virtual DbSet<UserType> UserTypes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -89,7 +93,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Address");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.BuildingNumber).HasColumnName("buildingNumber");
             entity.Property(e => e.City).HasColumnName("city");
@@ -107,7 +111,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Diploma_Teacher");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.DiplomaTypeId).HasColumnName("DiplomaType_id");
             entity.Property(e => e.Image).HasColumnName("image");
@@ -130,10 +134,45 @@ public partial class ScheduleMasterContext : DbContext
 
             entity.ToTable("DiplomaType", tb => tb.HasComment("Code table\nBeD, CV etc."));
 
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name).HasColumnName("name");
+        });
+
+        modelBuilder.Entity<EmploymentType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("EmploymentType_id_pkey");
+
+            entity.ToTable("EmploymentType", tb => tb.HasComment("Code table\nשכר מרצים, תקן וכו'"));
+
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Name).HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Group>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("SchoolGroup_pkey");
+
+            entity.ToTable("Group");
+
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Name).HasColumnName("name");
+            entity.Property(e => e.SchoolManagerId).HasColumnName("SchoolManager_id");
+            entity.Property(e => e.SubjectCategoryId).HasColumnName("SubjectCategory_id");
+
+            entity.HasOne(d => d.SchoolManager).WithMany(p => p.Groups)
+                .HasForeignKey(d => d.SchoolManagerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("SchoolManager_id_fkey");
+
+            entity.HasOne(d => d.SubjectCategory).WithMany(p => p.Groups)
+                .HasForeignKey(d => d.SubjectCategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Group_SubjectCategory_id_fkey");
         });
 
         modelBuilder.Entity<Manager>(entity =>
@@ -143,37 +182,37 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Manager");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.SchoolUserId).HasColumnName("School_User_id");
+            entity.Property(e => e.UserId).HasColumnName("User_id");
 
-            entity.HasOne(d => d.SchoolUser).WithMany(p => p.Managers)
-                .HasForeignKey(d => d.SchoolUserId)
+            entity.HasOne(d => d.User).WithMany(p => p.Managers)
+                .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Manager_School_User_id_fkey");
+                .HasConstraintName("Manager_User_id_fkey");
         });
 
-        modelBuilder.Entity<ManagerTeacher>(entity =>
+        modelBuilder.Entity<ManagerSchoolTeacher>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("Manager_Teacher_pkey");
+            entity.HasKey(e => e.Id).HasName("SchoolManager_Teacher_pkey");
 
-            entity.ToTable("Manager_Teacher");
+            entity.ToTable("ManagerSchool_Teacher");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.ManagerId).HasColumnName("Manager_id");
+            entity.Property(e => e.SchoolManagerId).HasColumnName("SchoolManager_id");
             entity.Property(e => e.TeacherId).HasColumnName("Teacher_id");
 
-            entity.HasOne(d => d.Manager).WithMany(p => p.ManagerTeachers)
-                .HasForeignKey(d => d.ManagerId)
+            entity.HasOne(d => d.SchoolManager).WithMany(p => p.ManagerSchoolTeachers)
+                .HasForeignKey(d => d.SchoolManagerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Manager_Teacher_Manager_id_fkey");
+                .HasConstraintName("SchoolManager_Teacher_Manager_id_fkey");
 
-            entity.HasOne(d => d.Teacher).WithMany(p => p.ManagerTeachers)
+            entity.HasOne(d => d.Teacher).WithMany(p => p.ManagerSchoolTeachers)
                 .HasForeignKey(d => d.TeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Manager_Teacher_Teacher_id_fkey");
+                .HasConstraintName("SchoolManager_Teacher_Teacher_id_fkey");
         });
 
         modelBuilder.Entity<Note>(entity =>
@@ -183,7 +222,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Note");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Content).HasColumnName("content");
         });
@@ -195,7 +234,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("PlacementStatus", tb => tb.HasComment("Code table"));
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
         });
 
@@ -206,7 +245,19 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Presence", tb => tb.HasComment("Code table\nנוכחות מלאה, חלקית, חסר"));
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.Name).HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Priority>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Priority_pkey");
+
+            entity.ToTable("Priority", tb => tb.HasComment("Code table"));
+
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Name).HasColumnName("name");
         });
@@ -218,24 +269,24 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Schedule");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.DestinationDate).HasColumnName("destinationDate");
             entity.Property(e => e.FromDate).HasColumnName("fromDate");
+            entity.Property(e => e.GroupId).HasColumnName("Group_id");
             entity.Property(e => e.ScheduleTypeId).HasColumnName("ScheduleType_id");
-            entity.Property(e => e.SchoolGroupId).HasColumnName("SchoolGroup_id");
             entity.Property(e => e.Title).HasColumnName("title");
+
+            entity.HasOne(d => d.Group).WithMany(p => p.Schedules)
+                .HasForeignKey(d => d.GroupId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Schedule_Group_id_fkey");
 
             entity.HasOne(d => d.ScheduleType).WithMany(p => p.Schedules)
                 .HasForeignKey(d => d.ScheduleTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Schedule_ScheduleType_id_fkey");
-
-            entity.HasOne(d => d.SchoolGroup).WithMany(p => p.Schedules)
-                .HasForeignKey(d => d.SchoolGroupId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Schedule_SchoolGroup_id_fkey");
         });
 
         modelBuilder.Entity<ScheduleNote>(entity =>
@@ -245,7 +296,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Schedule_Note");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.NoteId).HasColumnName("Note_id");
             entity.Property(e => e.ScheduleId).HasColumnName("Schedule_id");
@@ -268,15 +319,23 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Schedule_Subject");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.EndHour).HasColumnName("endHour");
+            entity.Property(e => e.NPlacementHours)
+                .HasDefaultValue(1)
+                .HasColumnName("nPlacementHours");
+            entity.Property(e => e.NoteId).HasColumnName("Note_id");
             entity.Property(e => e.PlacementStatusId).HasColumnName("PlacementStatus_id");
             entity.Property(e => e.ScheduleId).HasColumnName("Schedule_id");
             entity.Property(e => e.StartHour).HasColumnName("startHour");
             entity.Property(e => e.SubjectId).HasColumnName("Subject_id");
             entity.Property(e => e.TeacherId).HasColumnName("Teacher_id");
+
+            entity.HasOne(d => d.Note).WithMany(p => p.ScheduleSubjects)
+                .HasForeignKey(d => d.NoteId)
+                .HasConstraintName("Schedule_Subject_Note_id_fkey");
 
             entity.HasOne(d => d.PlacementStatus).WithMany(p => p.ScheduleSubjects)
                 .HasForeignKey(d => d.PlacementStatusId)
@@ -306,7 +365,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("ScheduleType", tb => tb.HasComment("Code table"));
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Name).HasColumnName("name");
         });
@@ -318,70 +377,61 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("School");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.Address).HasColumnName("address");
             entity.Property(e => e.AddressId).HasColumnName("Address_id");
             entity.Property(e => e.InstitutionSymbol).HasColumnName("institutionSymbol");
             entity.Property(e => e.Name).HasColumnName("name");
 
-            entity.HasOne(d => d.AddressNavigation).WithMany(p => p.Schools)
+            entity.HasOne(d => d.Address).WithMany(p => p.Schools)
                 .HasForeignKey(d => d.AddressId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("School_Address_id_fkey");
         });
 
-        modelBuilder.Entity<SchoolGroup>(entity =>
+        modelBuilder.Entity<SchoolManager>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("SchoolGroup_pkey");
+            entity.HasKey(e => e.Id).HasName("School_Manager_pkey");
 
-            entity.ToTable("SchoolGroup");
+            entity.ToTable("School_Manager");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.Name).HasColumnName("name");
-            entity.Property(e => e.SchoolGroupId).HasColumnName("SchoolGroup_id");
+            entity.Property(e => e.ManagerId).HasColumnName("Manager_id");
             entity.Property(e => e.SchoolId).HasColumnName("School_id");
-            entity.Property(e => e.SubjectCategoryId).HasColumnName("SubjectCategory_id");
 
-            entity.HasOne(d => d.SchoolGroupNavigation).WithMany(p => p.InverseSchoolGroupNavigation)
-                .HasForeignKey(d => d.SchoolGroupId)
+            entity.HasOne(d => d.Manager).WithMany(p => p.SchoolManagers)
+                .HasForeignKey(d => d.ManagerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("SchoolGroup_fkey");
+                .HasConstraintName("School_Manager_User_id_fkey");
 
-            entity.HasOne(d => d.School).WithMany(p => p.SchoolGroups)
+            entity.HasOne(d => d.School).WithMany(p => p.SchoolManagers)
                 .HasForeignKey(d => d.SchoolId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("SchoolGroup_School_id_fkey");
-
-            entity.HasOne(d => d.SubjectCategory).WithMany(p => p.SchoolGroups)
-                .HasForeignKey(d => d.SubjectCategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("SchoolGroup_SubjectCategory_id_fkey");
+                .HasConstraintName("School_Manager_School_id_fkey");
         });
 
-        modelBuilder.Entity<SchoolUser>(entity =>
+        modelBuilder.Entity<SchoolSecretary>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("School_User_pkey");
+            entity.HasKey(e => e.Id).HasName("School_Secretary_id_pkey");
 
-            entity.ToTable("School_User");
+            entity.ToTable("School_Secretary");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.SchoolId).HasColumnName("School_id");
-            entity.Property(e => e.UserId).HasColumnName("User_id");
+            entity.Property(e => e.SecretaryId).HasColumnName("Secretary_id");
 
-            entity.HasOne(d => d.School).WithMany(p => p.SchoolUsers)
+            entity.HasOne(d => d.School).WithMany(p => p.SchoolSecretaries)
                 .HasForeignKey(d => d.SchoolId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("School_User_School_id_fkey");
+                .HasConstraintName("School_Secretary_School_id_fkey");
 
-            entity.HasOne(d => d.User).WithMany(p => p.SchoolUsers)
-                .HasForeignKey(d => d.UserId)
+            entity.HasOne(d => d.Secretary).WithMany(p => p.SchoolSecretaries)
+                .HasForeignKey(d => d.SecretaryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("School_User_User_id_fkey");
+                .HasConstraintName("School_Secretary_Secretary_id_fkey");
         });
 
         modelBuilder.Entity<Secretary>(entity =>
@@ -391,14 +441,14 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Secretary");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.SchoolUserId).HasColumnName("School_User_id");
+            entity.Property(e => e.UserId).HasColumnName("User_id");
 
-            entity.HasOne(d => d.SchoolUser).WithMany(p => p.Secretaries)
-                .HasForeignKey(d => d.SchoolUserId)
+            entity.HasOne(d => d.User).WithMany(p => p.Secretaries)
+                .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Secretary_School_User_id_fkey");
+                .HasConstraintName("Secretary_User_id_fkey");
         });
 
         modelBuilder.Entity<Student>(entity =>
@@ -408,21 +458,21 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Student");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
+            entity.Property(e => e.GroupId).HasColumnName("Group_id");
             entity.Property(e => e.IdNumber).HasColumnName("idNumber");
-            entity.Property(e => e.SchoolGroupId).HasColumnName("SchoolGroup_id");
-            entity.Property(e => e.SchoolUserId).HasColumnName("School_User_id");
+            entity.Property(e => e.UserId).HasColumnName("User_id");
 
-            entity.HasOne(d => d.SchoolGroup).WithMany(p => p.Students)
-                .HasForeignKey(d => d.SchoolGroupId)
+            entity.HasOne(d => d.Group).WithMany(p => p.Students)
+                .HasForeignKey(d => d.GroupId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Student_SchoolGroup_id_fkey");
+                .HasConstraintName("Student_Group_id_fkey");
 
-            entity.HasOne(d => d.SchoolUser).WithMany(p => p.Students)
-                .HasForeignKey(d => d.SchoolUserId)
+            entity.HasOne(d => d.User).WithMany(p => p.Students)
+                .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Student_School_User_id_fkey");
+                .HasConstraintName("Student_User_id_fkey");
         });
 
         modelBuilder.Entity<StudentSubjectAssessment>(entity =>
@@ -432,7 +482,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Student_SubjectAssessment ");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Assessment).HasColumnName("assessment");
             entity.Property(e => e.Mark).HasColumnName("mark");
@@ -463,7 +513,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Student_Subject_Task");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Assessment).HasColumnName("assessment");
             entity.Property(e => e.LinkToSendAnswers).HasColumnName("linkToSendAnswers");
@@ -492,10 +542,10 @@ public partial class ScheduleMasterContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("Subject_pkey");
 
-            entity.ToTable("Subject");
+            entity.ToTable("Subject", tb => tb.HasComment("Code table\nJava, C#, תורה עיון"));
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.SubjectCategoryId).HasColumnName("SubjectCategory_id");
@@ -513,7 +563,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("SubjectCategory", tb => tb.HasComment("Code table"));
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Name).HasColumnName("name");
         });
@@ -525,7 +575,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Task");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.EndDate)
@@ -533,39 +583,27 @@ public partial class ScheduleMasterContext : DbContext
                 .HasColumnName("endDate");
             entity.Property(e => e.IsComplete).HasColumnName("isComplete");
             entity.Property(e => e.NoteId).HasColumnName("Note_id");
-            entity.Property(e => e.SchoolUserId).HasColumnName("School_User_id");
+            entity.Property(e => e.PriorityId).HasColumnName("Priority_id");
             entity.Property(e => e.StartDate)
                 .HasColumnType("time with time zone")
                 .HasColumnName("startDate");
-            entity.Property(e => e.TaskPriorityId).HasColumnName("TaskPriority_id");
             entity.Property(e => e.Title).HasColumnName("title");
+            entity.Property(e => e.UserId).HasColumnName("User_id");
 
             entity.HasOne(d => d.Note).WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.NoteId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Task_Note_id_fkey");
 
-            entity.HasOne(d => d.SchoolUser).WithMany(p => p.Tasks)
-                .HasForeignKey(d => d.SchoolUserId)
+            entity.HasOne(d => d.Priority).WithMany(p => p.Tasks)
+                .HasForeignKey(d => d.PriorityId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Task_School_User_id_fkey");
+                .HasConstraintName("Task_Priority_id_fkey");
 
-            entity.HasOne(d => d.TaskPriority).WithMany(p => p.Tasks)
-                .HasForeignKey(d => d.TaskPriorityId)
+            entity.HasOne(d => d.User).WithMany(p => p.Tasks)
+                .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Task_TaskPriority_id_fkey");
-        });
-
-        modelBuilder.Entity<TaskPriority>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("TaskPriority_pkey");
-
-            entity.ToTable("TaskPriority", tb => tb.HasComment("Code table"));
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
-            entity.Property(e => e.Name).HasColumnName("name");
+                .HasConstraintName("Task_User_id_fkey");
         });
 
         modelBuilder.Entity<Teacher>(entity =>
@@ -575,15 +613,15 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Teacher");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.IdNumber).HasColumnName("idNumber");
-            entity.Property(e => e.SchoolUserId).HasColumnName("School_User_id");
+            entity.Property(e => e.UserId).HasColumnName("User_id");
 
-            entity.HasOne(d => d.SchoolUser).WithMany(p => p.Teachers)
-                .HasForeignKey(d => d.SchoolUserId)
+            entity.HasOne(d => d.User).WithMany(p => p.Teachers)
+                .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Teacher_School_User_id_fkey");
+                .HasConstraintName("Teacher_User_id_fkey");
         });
 
         modelBuilder.Entity<TeacherConcentraint>(entity =>
@@ -593,19 +631,49 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("TeacherConcentraint");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.DayOfWeek).HasColumnName("dayOfWeek");
             entity.Property(e => e.EndHour).HasColumnName("endHour");
             entity.Property(e => e.IsAble).HasColumnName("isAble");
             entity.Property(e => e.IsRequired).HasColumnName("isRequired");
+            entity.Property(e => e.ManagerSchoolTeacherId).HasColumnName("ManagerSchool_Teacher_id");
             entity.Property(e => e.StartHour).HasColumnName("startHour");
-            entity.Property(e => e.TeacherId).HasColumnName("Teacher_id");
 
-            entity.HasOne(d => d.Teacher).WithMany(p => p.TeacherConcentraints)
-                .HasForeignKey(d => d.TeacherId)
+            entity.HasOne(d => d.ManagerSchoolTeacher).WithMany(p => p.TeacherConcentraints)
+                .HasForeignKey(d => d.ManagerSchoolTeacherId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("TeacherConcentraint_Teacher_id_fkey");
+                .HasConstraintName("TeacherConcentraint_ManagerSchoolTeacher_id_fkey");
+        });
+
+        modelBuilder.Entity<TeacherEmployment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("TeacherEmployment_id_pkey");
+
+            entity.ToTable("TeacherEmployment");
+
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.EmploymentTypeId).HasColumnName("EmploymentType_id");
+            entity.Property(e => e.SchoolManagerId).HasColumnName("SchoolManager_id");
+            entity.Property(e => e.SumPerHour).HasColumnName("sumPerHour");
+            entity.Property(e => e.TeacherSubjectId).HasColumnName("Teacher_Subject_id");
+
+            entity.HasOne(d => d.EmploymentType).WithMany(p => p.TeacherEmployments)
+                .HasForeignKey(d => d.EmploymentTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("TeacherEmployment_EmploymentType_id_fkey");
+
+            entity.HasOne(d => d.SchoolManager).WithMany(p => p.TeacherEmployments)
+                .HasForeignKey(d => d.SchoolManagerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("TeacherEmployment_SchoolManager_id_fkey");
+
+            entity.HasOne(d => d.TeacherSubject).WithMany(p => p.TeacherEmployments)
+                .HasForeignKey(d => d.TeacherSubjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("TeacherEmployment_TeacherSubject_id_fkey");
         });
 
         modelBuilder.Entity<TeacherSubject>(entity =>
@@ -615,9 +683,8 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("Teacher_Subject");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.NPlacementHours).HasColumnName("nPlacementHours");
             entity.Property(e => e.SubjectId).HasColumnName("Subject_id");
             entity.Property(e => e.TeacherId).HasColumnName("Teacher_id");
 
@@ -639,7 +706,7 @@ public partial class ScheduleMasterContext : DbContext
             entity.ToTable("User");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.AddressId).HasColumnName("Address_id");
             entity.Property(e => e.FirstName).HasColumnName("firstName");
@@ -647,31 +714,12 @@ public partial class ScheduleMasterContext : DbContext
             entity.Property(e => e.Password).HasColumnName("password");
             entity.Property(e => e.ProfileImage).HasColumnName("profileImage");
             entity.Property(e => e.Salt).HasColumnName("salt");
-            entity.Property(e => e.UserTypeId).HasColumnName("UserType_id");
             entity.Property(e => e.Username).HasColumnName("username");
 
             entity.HasOne(d => d.Address).WithMany(p => p.Users)
                 .HasForeignKey(d => d.AddressId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("User_Address_id_fkey");
-
-            entity.HasOne(d => d.UserType).WithMany(p => p.Users)
-                .HasForeignKey(d => d.UserTypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("User_UserType_id_fkey");
-        });
-
-        modelBuilder.Entity<UserType>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("UserType_pkey");
-
-            entity.ToTable("UserType", tb => tb.HasComment("Code table"));
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
-            entity.Property(e => e.Description).HasColumnName("description");
-            entity.Property(e => e.Name).HasColumnName("name");
         });
 
         OnModelCreatingPartial(modelBuilder);

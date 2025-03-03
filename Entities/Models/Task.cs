@@ -7,7 +7,7 @@ public partial class Task
 {
     public int Id { get; set; }
 
-    public int TaskPriorityId { get; set; }
+    public int PriorityId { get; set; }
 
     public DateTimeOffset? StartDate { get; set; }
 
@@ -21,13 +21,13 @@ public partial class Task
 
     public string Title { get; set; } = null!;
 
-    public int SchoolUserId { get; set; }
+    public int UserId { get; set; }
 
     public virtual Note Note { get; set; } = null!;
 
-    public virtual SchoolUser SchoolUser { get; set; } = null!;
+    public virtual Priority Priority { get; set; } = null!;
 
     public virtual ICollection<StudentSubjectTask> StudentSubjectTasks { get; set; } = new List<StudentSubjectTask>();
 
-    public virtual TaskPriority TaskPriority { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
 }

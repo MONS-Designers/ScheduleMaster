@@ -11,5 +11,7 @@ public partial class Note
 
     public virtual ICollection<ScheduleNote> ScheduleNotes { get; set; } = new List<ScheduleNote>();
 
+    public virtual ICollection<ScheduleSubject> ScheduleSubjects { get; set; } = new List<ScheduleSubject>();
+
     public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();
 }
