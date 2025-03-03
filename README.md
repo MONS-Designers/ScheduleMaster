@@ -1,45 +1,33 @@
-# SacheduleMasterServer
+# ScheduleMaster
 
-## Overview
-This project is built using .NET Core 8 and follows a layered architecture consisting of Controllers, Services, Repositories, and Entities (including DTOs). It also includes Swagger for API documentation.
+## 🚀 Overview
+This repository implements schedule management, include tasks and teams managment.
+The repository contains projects for server & client sides.
 
-## Project Structure
-- **Controllers**: Contains the API controllers that handle incoming requests and return responses.
-- **Services**: Contains the business logic and service layer that interacts with repositories.
-- **Repositories**: Contains the data access layer that communicates with the database and entity models and Data Transfer Objects used throughout the application.
+## 💻 Technologies Used
 
-## Getting Started
+- **Backend:** .Net core 8.0
+- **Frontend:** ReactTS 19
+- **DB:** PostgreSQL
 
-### Prerequisites
-- .NET Core 8 SDK
-- Any code editor or IDE (e.g., Visual Studio, Visual Studio Code)
+## 🔧 Installation
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/MONS-Designers/ScheduleMaster.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd ScheduleMaster/server
-   ```
-3. Restore the dependencies:
-   ```bash
-   dotnet restore
-   ```
+Each project in this repo contains its own installation commands, please follow the instructions in the specific projects' documentation.
 
-### Running the Application
-To run the application, use the following command:
-```bash
-dotnet run
-```
-The application will be available.
+## 🪴Usage
+Each project in this repo contains its own usage, please follow the instructions in the specific projects' documentation.
 
-### Swagger
-Swagger is included for API documentation. Once the application is running, you can access the Swagger UI (if you don't see it) by adding the next text to the browser's URL:
-```
-/swagger
-```
+## 📚 Learning Resources
+To learn more about the technologies used in this project, you can refer to the following resources:
 
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+- **ASP.NET Core Documentation:** <https://jakeydocs.readthedocs.io/en/latest/>
+- **Get started with ASP.NET Core 8.0 Tutorial:** <https://learn.microsoft.com/en-us/aspnet/core/getting-started/?view=aspnetcore-8.0>
+- **React Documentation:** <https://legacy.reactjs.org/docs/getting-started.html>
+- **PostgreSQL Documentation:** <https://cloud.google.com/learn/postgresql-vs-sql>
+
+## Contact
+Copyright © 2024 Nomi Magnus
+
+All rights reserved. This code is the intellectual property of Nomi Magnus. You are not allowed to copy, modify, or distribute it without permission.
+
+For more information, contact nomimagnus@gmail.com.
