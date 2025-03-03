@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace Entities.Models;
+
 public partial class ScheduleSubject
 {
     public int Id { get; set; }
@@ -19,6 +20,12 @@ public partial class ScheduleSubject
     public TimeOnly EndHour { get; set; }
 
     public int SubjectId { get; set; }
+
+    public int? NPlacementHours { get; set; }
+
+    public int? NoteId { get; set; }
+
+    public virtual Note? Note { get; set; }
 
     public virtual PlacementStatus PlacementStatus { get; set; } = null!;
 

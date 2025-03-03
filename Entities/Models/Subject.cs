@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Entities.Models;
 
+/// <summary>
+/// Code table
+/// Java, C#, תורה עיון
+/// </summary>
 public partial class Subject
 {
     public int Id { get; set; }

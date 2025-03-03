@@ -9,15 +9,15 @@ public partial class Student
 
     public string IdNumber { get; set; } = null!;
 
-    public int SchoolGroupId { get; set; }
+    public int GroupId { get; set; }
 
-    public int SchoolUserId { get; set; }
+    public int UserId { get; set; }
 
-    public virtual SchoolGroup SchoolGroup { get; set; } = null!;
-
-    public virtual SchoolUser SchoolUser { get; set; } = null!;
+    public virtual Group Group { get; set; } = null!;
 
     public virtual ICollection<StudentSubjectAssessment> StudentSubjectAssessments { get; set; } = new List<StudentSubjectAssessment>();
 
     public virtual ICollection<StudentSubjectTask> StudentSubjectTasks { get; set; } = new List<StudentSubjectTask>();
+
+    public virtual User User { get; set; } = null!;
 }

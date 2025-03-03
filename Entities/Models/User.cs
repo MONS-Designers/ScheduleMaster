@@ -19,13 +19,15 @@ public partial class User
 
     public int AddressId { get; set; }
 
-    public int UserTypeId { get; set; }
-
     public byte[]? ProfileImage { get; set; }
 
     public virtual Address Address { get; set; } = null!;
 
-    public virtual ICollection<SchoolUser> SchoolUsers { get; set; } = new List<SchoolUser>();
+    public virtual ICollection<Secretary> Secretaries { get; set; } = new List<Secretary>();
 
-    public virtual UserType UserType { get; set; } = null!;
+    public virtual ICollection<Student> Students { get; set; } = new List<Student>();
+
+    public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();
+
+    public virtual ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
 }

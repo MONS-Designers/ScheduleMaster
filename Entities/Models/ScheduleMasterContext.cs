@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Entities.Models;
-using Task = Entities.Models.Task;
+
+namespace Entities.Models;
 
 public partial class ScheduleMasterContext : DbContext
 {
