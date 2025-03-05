@@ -11,6 +11,6 @@ namespace Entities.DTOs
     {
         public int SubjectId {  get; set; }
         public string SubjectName { get; set; }
-        public string SubjectCategoryName { get; set; }
+        public string CategoryName { get; set; }
     }
 }

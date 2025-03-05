@@ -9,19 +9,20 @@ namespace Entities.DTOs
 {
     public class TeacherDetailsDTO
     {
-        public string Mail { get; set; }
+        public required int teacherId {  get; set; }
+        public required string Mail { get; set; }
 
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; }
 
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
-        public string Telephone { get; set; }
+        public string? Telephone { get; set; }
 
-        public string CellPhone { get; set; }
+        public string? CellPhone { get; set; }
 
-        //public string ProfileImageURL { get; set; }
+        public string? ProfileImageURL { get; set; }
 
-        public string ProfileName { get; set; }
+        public string? ProfileName { get; set; }
 
         public IEnumerable<SubjectDTO>? Subjects { get; set; }
     }

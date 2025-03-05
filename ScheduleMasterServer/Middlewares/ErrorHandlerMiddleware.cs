@@ -25,7 +25,7 @@ namespace ScheduleMasterServer.Middlewares
             {
                 //logger.LogError($"Logged from middleware: {ex.Message} \n{ex.StackTrace}");
                 httpContext.Response.StatusCode = 500;
-                await httpContext.Response.WriteAsync("Internal server error");
+                await httpContext.Response.WriteAsync($"Internal server error: \n{ex.Message} \n{ex.StackTrace}");
             }
         }
     }

@@ -13,16 +13,16 @@ namespace ScheduleMasterServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ManagerController : ControllerBase
+    public class ManagersController : ControllerBase
     {
         private readonly IManagerService _service;
 
-        public ManagerController(IManagerService managerService)
+        public ManagersController(IManagerService managerService)
         {
             _service = managerService;
         }
 
-        // GET: api/managers
+        // GET: api/<ManagersController>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Manager>>> Get()
         {
@@ -32,7 +32,7 @@ namespace ScheduleMasterServer.Controllers
             return Ok(managers);
         }
 
-        // GET: api/managers/5
+        // GET: api/<ManagersController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Manager>> Get(int id)
         {
@@ -46,7 +46,7 @@ namespace ScheduleMasterServer.Controllers
             return Ok(manager);
         }
 
-        // PUT: api/managers/5
+        // PUT: api/<ManagersController>/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, Manager manager)
@@ -62,7 +62,7 @@ namespace ScheduleMasterServer.Controllers
             return Ok(updatedManager);
         }
 
-        // POST: api/managers
+        // POST: api/<ManagersController>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Manager>> Post(Manager manager)
@@ -71,6 +71,7 @@ namespace ScheduleMasterServer.Controllers
             return CreatedAtAction("Get", new { id }, id);
         }
 
+        // GET: api/<ManagersController>/5/teachers
         [HttpGet("{id}/teachers")]
         public async Task<IActionResult> GetTeachersByParameters(int id)
         {

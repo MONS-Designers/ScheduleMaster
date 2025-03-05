@@ -8,15 +8,15 @@ namespace ScheduleMasterServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddressController : ControllerBase
+    public class AddressesController : ControllerBase
     {
         IAddressService _addressService;
-        public AddressController(IAddressService addressService)
+        public AddressesController(IAddressService addressService)
         {
             _addressService = addressService;
         }
 
-        // GET: api/<AddressController>
+        // GET: api/<AddressesController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -26,7 +26,7 @@ namespace ScheduleMasterServer.Controllers
             return Ok(addresses);
         }
 
-        // GET api/<AddressController>/5
+        // GET api/<AddressesController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -36,7 +36,7 @@ namespace ScheduleMasterServer.Controllers
             return NoContent();
         }
 
-        // POST api/<AddressController>
+        // POST api/<AddressesController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Address address)
         {
@@ -44,7 +44,7 @@ namespace ScheduleMasterServer.Controllers
             return CreatedAtAction(nameof(Get), new { id }, id);
         }
 
-        // PUT api/<AddressController>/5
+        // PUT api/<AddressesController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Address address)
         {

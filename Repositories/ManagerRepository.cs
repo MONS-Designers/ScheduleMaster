@@ -42,16 +42,17 @@ namespace Repositories
         }
         public async Task<IEnumerable<TeacherDetailsDTO>> GetTeachersByParametersAsync(int id)
         {
-
-            var teachers = await _context.ManagerSchoolTeachers.Where(mt => mt.SchoolManager.ManagerId == id).Select(t => new TeacherDetailsDTO
+            var teachers = await _context.ManagerSchoolTeachers.Where(mt => mt.SchoolManager.ManagerId == id).Select(t =>
+            new TeacherDetailsDTO
             {
+                teacherId = t.TeacherId,
                 Mail = t.Teacher.User.Username,
                 FirstName = t.Teacher.User.FirstName,
                 LastName = t.Teacher.User.LastName,
-                //ProfileImageURL = "t.Teacher.User.ProfileImage",
-                Telephone = "telephone",
-                CellPhone = "cellphone",
-                Subjects = t.Teacher.TeacherSubjects.ToList().Select(ts=> new SubjectDTO { SubjectId = ts.SubjectId, SubjectName = ts.Subject.Name, SubjectCategoryName = ts.Subject.SubjectCategory.Name})
+                ProfileImageURL = "t.Teacher.User.ProfileImage",
+                Telephone = "t.Teacher.User.Telephone",
+                CellPhone = "t.Teacher.User.CellPhone",
+                Subjects = t.Teacher.TeacherSubjects.ToList().Select(ts => new SubjectDTO { SubjectId = ts.SubjectId, SubjectName = ts.Subject.Name, CategoryName = ts.Subject.SubjectCategory.Name })
             }).ToListAsync();
 
             return teachers;
