@@ -184,6 +184,9 @@ public partial class ScheduleMasterContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.UserId).HasColumnName("User_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Managers)
@@ -201,6 +204,9 @@ public partial class ScheduleMasterContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.SchoolManagerId).HasColumnName("SchoolManager_id");
             entity.Property(e => e.TeacherId).HasColumnName("Teacher_id");
 
@@ -275,6 +281,12 @@ public partial class ScheduleMasterContext : DbContext
             entity.Property(e => e.DestinationDate).HasColumnName("destinationDate");
             entity.Property(e => e.FromDate).HasColumnName("fromDate");
             entity.Property(e => e.GroupId).HasColumnName("Group_id");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
+            entity.Property(e => e.LastUpdateDateTime)
+                .HasColumnType("time with time zone")
+                .HasColumnName("lastUpdateDateTime");
             entity.Property(e => e.ScheduleTypeId).HasColumnName("ScheduleType_id");
             entity.Property(e => e.Title).HasColumnName("title");
 
@@ -397,6 +409,9 @@ public partial class ScheduleMasterContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.ManagerId).HasColumnName("Manager_id");
             entity.Property(e => e.SchoolId).HasColumnName("School_id");
 
@@ -420,6 +435,9 @@ public partial class ScheduleMasterContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.SchoolId).HasColumnName("School_id");
             entity.Property(e => e.SecretaryId).HasColumnName("Secretary_id");
 
@@ -443,6 +461,9 @@ public partial class ScheduleMasterContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.UserId).HasColumnName("User_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Secretaries)
@@ -462,6 +483,9 @@ public partial class ScheduleMasterContext : DbContext
                 .HasColumnName("id");
             entity.Property(e => e.GroupId).HasColumnName("Group_id");
             entity.Property(e => e.IdNumber).HasColumnName("idNumber");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.UserId).HasColumnName("User_id");
 
             entity.HasOne(d => d.Group).WithMany(p => p.Students)
@@ -485,6 +509,9 @@ public partial class ScheduleMasterContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Assessment).HasColumnName("assessment");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.Mark).HasColumnName("mark");
             entity.Property(e => e.PresenceId).HasColumnName("Presence_id");
             entity.Property(e => e.ScheduleSubjectId).HasColumnName("Schedule_Subject_id");
@@ -516,6 +543,9 @@ public partial class ScheduleMasterContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Assessment).HasColumnName("assessment");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.LinkToSendAnswers).HasColumnName("linkToSendAnswers");
             entity.Property(e => e.Mark).HasColumnName("mark");
             entity.Property(e => e.ScheduleSubjectId).HasColumnName("Schedule_Subject_id");
@@ -581,6 +611,9 @@ public partial class ScheduleMasterContext : DbContext
             entity.Property(e => e.EndDate)
                 .HasColumnType("time with time zone")
                 .HasColumnName("endDate");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.IsComplete).HasColumnName("isComplete");
             entity.Property(e => e.NoteId).HasColumnName("Note_id");
             entity.Property(e => e.PriorityId).HasColumnName("Priority_id");
@@ -616,6 +649,9 @@ public partial class ScheduleMasterContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.IdNumber).HasColumnName("idNumber");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.UserId).HasColumnName("User_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Teachers)
@@ -656,6 +692,9 @@ public partial class ScheduleMasterContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.EmploymentTypeId).HasColumnName("EmploymentType_id");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.SchoolManagerId).HasColumnName("SchoolManager_id");
             entity.Property(e => e.SumPerHour).HasColumnName("sumPerHour");
             entity.Property(e => e.TeacherSubjectId).HasColumnName("Teacher_Subject_id");
@@ -685,6 +724,9 @@ public partial class ScheduleMasterContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.SubjectId).HasColumnName("Subject_id");
             entity.Property(e => e.TeacherId).HasColumnName("Teacher_id");
 
@@ -709,16 +751,20 @@ public partial class ScheduleMasterContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.AddressId).HasColumnName("Address_id");
+            entity.Property(e => e.CellPhone).HasColumnName("cellPhone");
             entity.Property(e => e.FirstName).HasColumnName("firstName");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("isActive");
             entity.Property(e => e.LastName).HasColumnName("lastName");
             entity.Property(e => e.Password).HasColumnName("password");
-            entity.Property(e => e.ProfileImage).HasColumnName("profileImage");
+            entity.Property(e => e.ProfileImageUrl).HasColumnName("profileImageURL");
             entity.Property(e => e.Salt).HasColumnName("salt");
+            entity.Property(e => e.Telephone).HasColumnName("telephone");
             entity.Property(e => e.Username).HasColumnName("username");
 
             entity.HasOne(d => d.Address).WithMany(p => p.Users)
                 .HasForeignKey(d => d.AddressId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("User_Address_id_fkey");
         });
 

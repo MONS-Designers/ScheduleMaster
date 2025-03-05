@@ -11,6 +11,8 @@ public partial class SchoolSecretary
 
     public int SecretaryId { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual School School { get; set; } = null!;
 
     public virtual Secretary Secretary { get; set; } = null!;

@@ -11,6 +11,8 @@ public partial class SchoolManager
 
     public int SchoolId { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
 
     public virtual Manager Manager { get; set; } = null!;

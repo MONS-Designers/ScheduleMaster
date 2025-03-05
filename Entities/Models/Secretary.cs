@@ -9,6 +9,8 @@ public partial class Secretary
 
     public int UserId { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual ICollection<SchoolSecretary> SchoolSecretaries { get; set; } = new List<SchoolSecretary>();
 
     public virtual User User { get; set; } = null!;

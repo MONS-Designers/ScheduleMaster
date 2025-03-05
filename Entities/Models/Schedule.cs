@@ -19,6 +19,10 @@ public partial class Schedule
 
     public string? Description { get; set; }
 
+    public bool IsActive { get; set; }
+
+    public DateTimeOffset? LastUpdateDateTime { get; set; }
+
     public virtual Group Group { get; set; } = null!;
 
     public virtual ICollection<ScheduleNote> ScheduleNotes { get; set; } = new List<ScheduleNote>();

@@ -23,6 +23,8 @@ public partial class Task
 
     public int UserId { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual Note Note { get; set; } = null!;
 
     public virtual Priority Priority { get; set; } = null!;

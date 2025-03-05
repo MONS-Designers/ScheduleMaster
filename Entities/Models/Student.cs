@@ -13,6 +13,8 @@ public partial class Student
 
     public int UserId { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual Group Group { get; set; } = null!;
 
     public virtual ICollection<StudentSubjectAssessment> StudentSubjectAssessments { get; set; } = new List<StudentSubjectAssessment>();

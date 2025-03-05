@@ -19,6 +19,8 @@ public partial class StudentSubjectTask
 
     public int TaskId { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual ScheduleSubject ScheduleSubject { get; set; } = null!;
 
     public virtual Student Student { get; set; } = null!;

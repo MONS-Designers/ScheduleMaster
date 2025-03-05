@@ -17,11 +17,17 @@ public partial class User
 
     public string? LastName { get; set; }
 
-    public int AddressId { get; set; }
+    public int? AddressId { get; set; }
 
-    public byte[]? ProfileImage { get; set; }
+    public string? Telephone { get; set; }
 
-    public virtual Address Address { get; set; } = null!;
+    public string? CellPhone { get; set; }
+
+    public string? ProfileImageUrl { get; set; }
+
+    public bool IsActive { get; set; }
+
+    public virtual Address? Address { get; set; }
 
     public virtual ICollection<Secretary> Secretaries { get; set; } = new List<Secretary>();
 

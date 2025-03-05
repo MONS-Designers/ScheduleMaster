@@ -9,6 +9,8 @@ public partial class Manager
 
     public int UserId { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual ICollection<SchoolManager> SchoolManagers { get; set; } = new List<SchoolManager>();
 
     public virtual SchoolManager User { get; set; } = null!;

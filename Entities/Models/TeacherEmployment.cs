@@ -15,6 +15,8 @@ public partial class TeacherEmployment
 
     public int TeacherSubjectId { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual EmploymentType EmploymentType { get; set; } = null!;
 
     public virtual SchoolManager SchoolManager { get; set; } = null!;

@@ -13,6 +13,8 @@ public partial class Teacher
 
     public int UserId { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual ICollection<DiplomaTeacher> DiplomaTeachers { get; set; } = new List<DiplomaTeacher>();
 
     public virtual ICollection<ManagerSchoolTeacher> ManagerSchoolTeachers { get; set; } = new List<ManagerSchoolTeacher>();
