@@ -67,8 +67,13 @@ namespace ScheduleMasterServer.Controllers
         [HttpPost]
         public async Task<ActionResult<Manager>> Post(Manager manager)
         {
-            var id = _service.AddAsync(manager);
-            return CreatedAtAction("Get", new { id }, id);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var id = await _service.AddAsync(manager);
+            if (id == 0)
+                return BadRequest();
+            return CreatedAtAction(nameof(Get), new { id }, id);
         }
 
         // GET: api/<ManagersController>/5/teachers

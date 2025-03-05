@@ -9,8 +9,8 @@ namespace Entities.DTOs
 {
     public class TeacherDetailsDTO
     {
-        public required int teacherId {  get; set; }
-        public required string Mail { get; set; }
+        public int TeacherId { get; set; }
+        public string Mail { get; set; }
 
         public string? FirstName { get; set; }
 

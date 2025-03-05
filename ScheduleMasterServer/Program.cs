@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Repositories;
 using ScheduleMasterServer.Middlewares;
 using Services;
@@ -15,8 +16,12 @@ builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
 builder.Services.AddScoped<IManagerRepository, ManagerRepository>();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ScheduleMasterContext>(options => options.UseNpgsql(connectionString));
+
+builder.Host.UseNLog();
 
 var app = builder.Build();
 
@@ -27,8 +32,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 app.UseHttpsRedirection();
 

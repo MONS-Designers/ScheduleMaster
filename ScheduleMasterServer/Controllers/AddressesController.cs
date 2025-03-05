@@ -40,7 +40,12 @@ namespace ScheduleMasterServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Address address)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var id = await _addressService.AddAsync(address);
+            if (id == 0)
+                return BadRequest();
             return CreatedAtAction(nameof(Get), new { id }, id);
         }
 

@@ -14,7 +14,7 @@ namespace ScheduleMasterServer.Middlewares
             _next = next;
         }
 
-        public async Task Invoke(HttpContext httpContext)
+        public async Task Invoke(HttpContext httpContext, ILogger<ErrorHandlerMiddleware> logger)
         {
 
             try
@@ -23,9 +23,9 @@ namespace ScheduleMasterServer.Middlewares
             }
             catch (Exception ex)
             {
-                //logger.LogError($"Logged from middleware: {ex.Message} \n{ex.StackTrace}");
+                logger.LogError($"Logged from middleware: {ex.Message} \n{ex.StackTrace}");
                 httpContext.Response.StatusCode = 500;
-                await httpContext.Response.WriteAsync($"Internal server error: \n{ex.Message} \n{ex.StackTrace}");
+                await httpContext.Response.WriteAsync("Internal server error");
             }
         }
     }
