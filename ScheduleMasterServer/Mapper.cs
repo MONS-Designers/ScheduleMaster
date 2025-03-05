@@ -9,7 +9,7 @@ namespace ScheduleMasterServer
         public Mapper()
         {
             CreateMap<Address, AddressDTO>().ReverseMap();
-            CreateMap<UserType, UserTypeDTO>();
+            CreateMap<Teacher, TeacherDetailsDTO>();
         }
     }
 }

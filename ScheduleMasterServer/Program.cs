@@ -12,8 +12,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
-builder.Services.AddScoped<IUserTypeService, UserTypeService>();
-builder.Services.AddScoped<IUserTypeRepository, UserTypeRepository>();
+builder.Services.AddScoped<IManagerService, ManagerService>();
+builder.Services.AddScoped<IManagerRepository, ManagerRepository>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ScheduleMasterContext>(options => options.UseNpgsql(connectionString));
