@@ -152,7 +152,7 @@ namespace UnitTests.ScheduleMasterServer.Controllers
             // Arrange
             var mockService = new Mock<IManagerService>();
             var manager = new Manager();
-            mockService.Setup(service => service.AddAsync(manager)).ReturnsAsync(0); // Assuming 0 means failure
+            mockService.Setup(service => service.AddAsync(manager)).ReturnsAsync(0);
             var controller = new ManagersController(mockService.Object);
 
             // Act

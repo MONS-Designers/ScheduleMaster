@@ -20,7 +20,7 @@ public class AddressesControllerTests
     public async Task GetReturnsOkResultWithAddresses()
     {
         // Arrange
-        var addresses = new List<Address> { new Address() }; // Assume Address is a valid model
+        var addresses = new List<Address> { new Address() };
         _mockAddressService.Setup(service => service.GetAllAsync()).ReturnsAsync(addresses);
 
         // Act
@@ -109,8 +109,8 @@ public class AddressesControllerTests
     public async Task PostReturnsBadRequestWhenModelIsInvalid()
     {
         // Arrange
-        var address = new Address(); // Assuming this is invalid
-        _mockAddressService.Setup(service => service.AddAsync(address)).ReturnsAsync(0); // Assuming 0 means failure
+        var address = new Address();
+        _mockAddressService.Setup(service => service.AddAsync(address)).ReturnsAsync(0);
 
         // Act
         var result = await _controller.Post(address);
@@ -124,7 +124,7 @@ public class AddressesControllerTests
     {
         // Arrange
         var address = new Address { Id = 1 };
-        _mockAddressService.Setup(service => service.UpdateAsync(1, address)).ReturnsAsync((Address)null); // Assuming null means failure
+        _mockAddressService.Setup(service => service.UpdateAsync(1, address)).ReturnsAsync((Address)null);
 
         // Act
         var result = await _controller.Put(1, address);
