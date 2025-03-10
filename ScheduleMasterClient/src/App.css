@@ -17,9 +17,3 @@
   transition: transform 0.3s ease;
   cursor: url('schedulemasterLOGO.png'), none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .gradient-text:hover {
-    transform: scale(1.2);
-  }
-}

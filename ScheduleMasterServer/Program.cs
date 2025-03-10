@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 IConfiguration _configuration;
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -24,6 +25,8 @@ builder.Services.AddDbContext<ScheduleMasterContext>(options => options.UseNpgsq
 builder.Host.UseNLog();
 
 var app = builder.Build();
+
+app.UseCors((service) => service.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseErrorHandlerMiddleware();
 
