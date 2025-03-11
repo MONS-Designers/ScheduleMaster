@@ -14,6 +14,6 @@ namespace Services
         Task<Manager> GetByIdAsync(int id);
         Task<Manager> UpdateAsync(int id, Manager manager);
         Task<int> AddAsync(Manager manager);
-        Task<IEnumerable<TeacherDetailsDTO>> GetTeachersByParametersAsync(int id);
+        Task<IEnumerable<TeacherDetailsDTO>> GetTeachersByParametersAsync(int id, string? firstName, string? lastName, string? mail, List<string>? subjectsList, string? cellPhone, string? telephone);
     }
 }

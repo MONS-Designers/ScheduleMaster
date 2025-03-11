@@ -40,9 +40,16 @@ namespace Repositories
             await _context.SaveChangesAsync();
             return manager.Id;
         }
-        public async Task<IEnumerable<TeacherDetailsDTO>> GetTeachersByParametersAsync(int id)
+        public async Task<IEnumerable<TeacherDetailsDTO>> GetTeachersByParametersAsync(int id, string? firstName, string? lastName, string? mail, List<string>? subjectsList, string? cellPhone, string? telephone)
         {
-            var teachers = await _context.ManagerSchoolTeachers.Where(mt => mt.SchoolManager.ManagerId == id).Select(t =>
+            var teachers = await _context.ManagerSchoolTeachers.Where(mt => mt.SchoolManager.ManagerId == id 
+            && firstName == null || mt.Teacher.User.FirstName == null ? true : mt.Teacher.User.FirstName.Contains(firstName)
+            && lastName == null || mt.Teacher.User.LastName == null ? true : mt.Teacher.User.LastName.Contains(lastName)
+            && mail == null ? true : mt.Teacher.User.Username.Equals(mail)
+            && subjectsList == null ? true : mt.Teacher.TeacherSubjects.Any(ts => subjectsList.Contains(ts.Subject.Name))
+            && cellPhone == null || mt.Teacher.User.CellPhone == null ? true : mt.Teacher.User.CellPhone.Contains(cellPhone)
+            && telephone == null || mt.Teacher.User.Telephone == null ? true : mt.Teacher.User.Telephone.Contains(telephone)
+            ).Select(t =>
                 new TeacherDetailsDTO
                 {
                     TeacherId = t.TeacherId,

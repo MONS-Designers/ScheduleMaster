@@ -1,6 +1,6 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route } from 'react-router';
 import Home from '../pages/Home';
-import TeachersManagement from "../pages/TeachersManagement";
+import TeachersManagement from '../pages/TeachersManagement';
 
 const AppRouter = () => {
     return (

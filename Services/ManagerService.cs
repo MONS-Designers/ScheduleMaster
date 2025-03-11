@@ -34,9 +34,9 @@ namespace Services
         {
             return await _repository.AddAsync(manager);
         }
-        public async Task<IEnumerable<TeacherDetailsDTO>> GetTeachersByParametersAsync(int id)
+        public async Task<IEnumerable<TeacherDetailsDTO>> GetTeachersByParametersAsync(int id, string? firstName, string? lastName, string? mail, List<string>? subjectsList, string? cellPhone, string? telephone)
         {
-            return await _repository.GetTeachersByParametersAsync(id);
+            return await _repository.GetTeachersByParametersAsync(id, firstName, lastName, mail, subjectsList, cellPhone, telephone);
         }
     }
 }

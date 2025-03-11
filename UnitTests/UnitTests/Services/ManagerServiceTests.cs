@@ -93,10 +93,10 @@ public class ManagerServiceTests
             new TeacherDetailsDTO { TeacherId = 2, FirstName = "Teacher 2" }
         };
 
-        _mockRepository.Setup(repo => repo.GetTeachersByParametersAsync(1)).ReturnsAsync(teacherDetails);
+        _mockRepository.Setup(repo => repo.GetTeachersByParametersAsync(1, null, null, null, null, null, null)).ReturnsAsync(teacherDetails);
 
         // Act
-        var result = await _managerService.GetTeachersByParametersAsync(1);
+        var result = await _managerService.GetTeachersByParametersAsync(1, null, null, null, null, null, null);
 
         // Assert
         Assert.NotNull(result);
@@ -162,10 +162,10 @@ public class ManagerServiceTests
     public async Task GetTeachersByParametersAsync_UnhappyPath_ReturnsEmptyList()
     {
         // Arrange
-        _mockRepository.Setup(repo => repo.GetTeachersByParametersAsync(It.IsAny<int>())).ReturnsAsync(new List<TeacherDetailsDTO>());
+        _mockRepository.Setup(repo => repo.GetTeachersByParametersAsync(It.IsAny<int>(), null, null, null, null, null, null)).ReturnsAsync(new List<TeacherDetailsDTO>());
 
         // Act
-        var result = await _managerService.GetTeachersByParametersAsync(1);
+        var result = await _managerService.GetTeachersByParametersAsync(1, null, null, null, null, null, null);
 
         // Assert
         Assert.NotNull(result);

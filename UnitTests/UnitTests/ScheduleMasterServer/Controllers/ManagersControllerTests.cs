@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Entities.DTOs;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Moq;
 using ScheduleMasterServer.Controllers;
 using Services;
@@ -168,7 +169,7 @@ namespace UnitTests.ScheduleMasterServer.Controllers
             // Arrange
             var mockService = new Mock<IManagerService>();
             var teachers = new List<TeacherDetailsDTO> { new TeacherDetailsDTO() };
-            mockService.Setup(service => service.GetTeachersByParametersAsync(1)).ReturnsAsync(teachers);
+            mockService.Setup(service => service.GetTeachersByParametersAsync(1, null, null, null, null, null, null)).ReturnsAsync(teachers);
             var controller = new ManagersController(mockService.Object);
 
             // Act
@@ -185,7 +186,7 @@ namespace UnitTests.ScheduleMasterServer.Controllers
         {
             // Arrange
             var mockService = new Mock<IManagerService>();
-            mockService.Setup(service => service.GetTeachersByParametersAsync(1)).ReturnsAsync((IEnumerable<TeacherDetailsDTO>)null);
+            mockService.Setup(service => service.GetTeachersByParametersAsync(1, null, null, null, null, null, null)).ReturnsAsync((IEnumerable<TeacherDetailsDTO>)null);
             var controller = new ManagersController(mockService.Object);
 
             // Act

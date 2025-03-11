@@ -1,4 +1,4 @@
-import Logo from '../components/logoComponent/Logo'
+import Logo from '../components/logoComponent/Logo';
 import './Home.css';
 
 const Home = () => {

@@ -1,4 +1,4 @@
-import { ISubjectDTO } from "./ISubjectDTO";
+import { ISubjectDTO } from './ISubjectDTO';
 
 export interface ITeacherDetailsDTO {
     teacherId: number;

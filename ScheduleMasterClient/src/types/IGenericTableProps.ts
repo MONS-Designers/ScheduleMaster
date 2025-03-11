@@ -1,4 +1,4 @@
-import { TableColumn } from "./ITableColumn";
+import { TableColumn } from './ITableColumn';
 
 export interface GenericTableProps<T> {
     data: T[];

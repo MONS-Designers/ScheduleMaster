@@ -65,11 +65,10 @@ const TeachersManagement = () => {
                 columns={columns}
                 onRowEditComplete={handleRowEditComplete}
             /> */}
-            <Table teachers={data}/>
+            {data && <Table teachers={data}/>}
         </div>
-    )
+    );
 
 };
-
 
 export default TeachersManagement;

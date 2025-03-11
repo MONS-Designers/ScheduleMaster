@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Entities.Models;
 using Services;
 using Entities.DTOs;
+using Org.BouncyCastle.Utilities;
 
 namespace ScheduleMasterServer.Controllers
 {
@@ -78,9 +79,11 @@ namespace ScheduleMasterServer.Controllers
 
         // GET: api/<ManagersController>/5/teachers
         [HttpGet("{id}/teachers")]
-        public async Task<IActionResult> GetTeachersByParameters(int id)
+        public async Task<IActionResult> GetTeachersByParameters(int id, [FromQuery] string? firstName = null, [FromQuery] string? lastName = null,
+            [FromQuery] string? mail = null, [FromQuery] string? subjects = null, [FromQuery] string? cellPhone = null, [FromQuery] string? telephone = null)
         {
-            var managers = await _service.GetTeachersByParametersAsync(id);
+            List<string> subjectsList = subjects == null && subjects?.Length > 0 ? null : subjects?.Split(',').ToList();
+            var managers = await _service.GetTeachersByParametersAsync(id, firstName, lastName, mail, subjectsList, cellPhone, telephone);
             if (managers == null)
                 return NotFound();
             return Ok(managers);
