@@ -7,6 +7,7 @@ import magnusLogo from '../../../assets/magnusLogo.png';
 import { validateName, validateTelephone, validateCellPhone, validateEmail } from '../../../utils/validations';
 import { emailEditor, firstNameEditor, lastNameEditor, telephoneEditor, cellPhoneEditor, listEditor } from '../../../utils/editors';
 import { Button } from 'primereact/button';
+import './Table.css';
 
 const Table: React.FC<{ teachers: ITeacherDetailsDTO[] }> = ({ teachers }) => {
     const [data, setData] = useState<ITeacherDetailsDTO[]>(teachers);
@@ -20,8 +21,7 @@ const Table: React.FC<{ teachers: ITeacherDetailsDTO[] }> = ({ teachers }) => {
         { label: 'Java', value: 'Java' },
         { label: 'Science', value: 'science' },
         { label: 'History', value: 'history' },
-        { label: 'Art', value: 'art' },
-        // Add more subjects as needed
+        { label: 'Art', value: 'art' }
     ];
 
     const handleDelete = (teacherId: number): void => {
@@ -48,8 +48,8 @@ const Table: React.FC<{ teachers: ITeacherDetailsDTO[] }> = ({ teachers }) => {
     };
 
     return (
-        <DataTable value={data} paginator rows={25} editMode="row" dataKey="teacherId" onRowEditComplete={onRowEditComplete}>
-            <Column body={(rowData) => <img src={rowData.profileImageURL || magnusLogo || ''} alt={rowData.profileName} style={{ width: '50px', height: '50px' }} />} />
+        teachers && teachers?.length > 0 && <DataTable value={data} paginator rows={25} editMode="row" dataKey="teacherId" onRowEditComplete={onRowEditComplete}>
+            <Column body={(rowData) => <img src={rowData.profileImageURL || magnusLogo || ''} alt={rowData.profileName} className='profileImage' />} />
             <Column field='mail' header='Mail' editor={(options) => emailEditor(options)} />
             <Column sortable field="firstName" header="First Name" editor={(options) => firstNameEditor(options)} />
             <Column sortable field="lastName" header="Last Name" editor={(options) => lastNameEditor(options)} />
@@ -57,13 +57,12 @@ const Table: React.FC<{ teachers: ITeacherDetailsDTO[] }> = ({ teachers }) => {
             <Column field="cellPhone" header="Cell Phone" editor={(options) => cellPhoneEditor(options)} />
             <Column body={(rowData) => subjectNames(rowData.subjects)} header="Subjects" editor={(options) => listEditor(options, subjectOptions)} />
             <Column header='Edit' rowEditor={allowEdit} />
-            {/* <Column header='Edit' body={(rowData) => (
-                <Button label="Edit" icon="pi pi-pencil" onClick={() => handleEdit(rowData.teacherId)} />
-            )} /> */}
             <Column header='Delete' body={(rowData) => (
                 <Button label="Delete" icon="pi pi-trash" onClick={() => handleDelete(rowData.teacherId)} className="p-button-danger" severity="danger" />
             )} />
         </DataTable>
+        ||
+        <div>No data to display</div>
     );
 };
 

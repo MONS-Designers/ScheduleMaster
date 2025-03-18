@@ -1,0 +1,17 @@
+.start-content {
+    display: flex;
+    align-items: center;
+}
+
+.card {
+    width: '95vw';
+    margin: 0;
+    margin-bottom: '1rem';
+}
+
+.tool-bar {
+    border-radius: '8rem';
+    background-image: 'linear-gradient(to right, var(--blue-600), var(--yellow-700), var(--pink-200))';
+    height: '4rem';
+    flex-wrap: 'nowrap';
+}

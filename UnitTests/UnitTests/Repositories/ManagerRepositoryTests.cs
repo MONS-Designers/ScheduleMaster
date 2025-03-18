@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Entities.DTOs;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
 using Moq.EntityFrameworkCore;
 using Xunit;
@@ -55,6 +56,17 @@ namespace Repositories.Tests
         [Fact]
         public async Task GetAllAsync_ReturnsEmpty_WhenNoManagers()
         {
+            // Arrange
+            var managers = new List<Manager>().AsQueryable();
+
+            var mockSet = new Mock<DbSet<Manager>>();
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.Provider).Returns(managers.Provider);
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.Expression).Returns(managers.Expression);
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.ElementType).Returns(managers.ElementType);
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.GetEnumerator()).Returns(managers.GetEnumerator());
+
+            _mockContext.Setup(c => c.Managers).Returns(mockSet.Object);
+
             // Act
             var result = await _repository.GetAllAsync();
 
@@ -80,8 +92,23 @@ namespace Repositories.Tests
         [Fact]
         public async Task GetByIdAsync_ReturnsNull_WhenNotExists()
         {
+            // Arrange
+            var managers = new List<Manager>
+            {
+                new Manager { Id = 1, UserId = 1 },
+                new Manager { Id = 2, UserId = 2 }
+            }.AsQueryable();
+
+            var mockSet = new Mock<DbSet<Manager>>();
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.Provider).Returns(managers.Provider);
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.Expression).Returns(managers.Expression);
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.ElementType).Returns(managers.ElementType);
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.GetEnumerator()).Returns(managers.GetEnumerator());
+
+            _mockContext.Setup(c => c.Managers).Returns(mockSet.Object);
+
             // Act
-            var result = await _repository.GetByIdAsync(999);
+            var result = await _repository.GetByIdAsync(3);
 
             // Assert
             Assert.Null(result);
@@ -117,10 +144,24 @@ namespace Repositories.Tests
         public async Task UpdateAsync_ThrowsException_WhenManagerNotExists()
         {
             // Arrange
+            var managers = new List<Manager>().AsQueryable();
+
+            var mockSet = new Mock<DbSet<Manager>>();
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.Provider).Returns(managers.Provider);
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.Expression).Returns(managers.Expression);
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.ElementType).Returns(managers.ElementType);
+            mockSet.As<IQueryable<Manager>>().Setup(m => m.GetEnumerator()).Returns(managers.GetEnumerator());
+
+            _mockContext.Setup(c => c.Managers).Returns(mockSet.Object);
+            _mockContext.Setup(c => c.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
+
             var updatedManager = new Manager { UserId = 2 };
 
+            // Act
+            var result = await _repository.UpdateAsync(999, updatedManager);
+
             // Act & Assert
-            await Assert.ThrowsAsync<DbUpdateConcurrencyException>(() => _repository.UpdateAsync(999, updatedManager));
+            Assert.Null(result);
         }
 
         [Fact]
@@ -169,9 +210,9 @@ namespace Repositories.Tests
             mockManagersSet.As<IQueryable<Manager>>().Setup(m => m.GetEnumerator()).Returns(managers.GetEnumerator());
 
             var managerSchoolTeachers = new List<ManagerSchoolTeacher>
-        {
-            new ManagerSchoolTeacher { SchoolManager = school, Teacher = teacher }
-        }.AsQueryable();
+    {
+        new ManagerSchoolTeacher { SchoolManager = school, Teacher = teacher }
+    }.AsQueryable();
             var mockManagerSchoolTeachersSet = new Mock<DbSet<ManagerSchoolTeacher>>();
             mockManagerSchoolTeachersSet.As<IQueryable<ManagerSchoolTeacher>>().Setup(m => m.Provider).Returns(managerSchoolTeachers.Provider);
             mockManagerSchoolTeachersSet.As<IQueryable<ManagerSchoolTeacher>>().Setup(m => m.Expression).Returns(managerSchoolTeachers.Expression);

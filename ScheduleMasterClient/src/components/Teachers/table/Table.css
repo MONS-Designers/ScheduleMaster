@@ -1,0 +1,12 @@
+.profileImage {
+    width: 3rem;
+    height: 3rem;
+}
+
+.profileImage:hover {
+    transform: scale(1.1);
+}
+
+.table{
+    width: 100vw;
+}
