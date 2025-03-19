@@ -8,13 +8,13 @@ import { validateName, validateTelephone, validateCellPhone, validateEmail } fro
 import { emailEditor, firstNameEditor, lastNameEditor, telephoneEditor, cellPhoneEditor, listEditor } from '../../../utils/editors';
 import { Button } from 'primereact/button';
 import './Table.css';
+import { Chip } from 'primereact/chip';
 
 const Table: React.FC<{ teachers: ITeacherDetailsDTO[] }> = ({ teachers }) => {
     const [data, setData] = useState<ITeacherDetailsDTO[]>(teachers);
 
-    if (!teachers) return null;
-    const subjectNames = (subjects: ISubjectDTO[] | null) => {
-        return subjects ? subjects.map(subject => subject.subjectName).join(', ') : '';
+    const subjectNames = (subjects: ISubjectDTO[]) => {
+        return subjects && subjects.length > 0 ? subjects.map((subject) => <Chip key={subject.subjectId} label={subject.subjectName} className='chip'/>) : null;
     };
 
     const subjectOptions = [
@@ -25,7 +25,7 @@ const Table: React.FC<{ teachers: ITeacherDetailsDTO[] }> = ({ teachers }) => {
     ];
 
     const handleDelete = (teacherId: number): void => {
-        // Open a dialog with the question
+        // Open a dialog with a question
     };
 
     const onRowEditComplete = (e: any) => {
@@ -35,6 +35,7 @@ const Table: React.FC<{ teachers: ITeacherDetailsDTO[] }> = ({ teachers }) => {
         _teachers[index] = newData;
 
         setData(_teachers);
+        // Simulate saving to the server
     };
 
     const allowEdit = (rowData: ITeacherDetailsDTO) => {
@@ -58,7 +59,7 @@ const Table: React.FC<{ teachers: ITeacherDetailsDTO[] }> = ({ teachers }) => {
             <Column body={(rowData) => subjectNames(rowData.subjects)} header="Subjects" editor={(options) => listEditor(options, subjectOptions)} />
             <Column header='Edit' rowEditor={allowEdit} />
             <Column header='Delete' body={(rowData) => (
-                <Button label="Delete" icon="pi pi-trash" onClick={() => handleDelete(rowData.teacherId)} className="p-button-danger" severity="danger" />
+                <Button label="Delete" icon="pi pi-trash" onClick={() => handleDelete(rowData.teacherId)} severity="danger" />
             )} />
         </DataTable>
         ||

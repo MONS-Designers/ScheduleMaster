@@ -2,12 +2,12 @@ export const validateName = (name: string): boolean => {
     return /^[א-תa-zA-Z]{2,}$/.test(name);
 };
 
-export const validateTelephone = (telephone: string): boolean => {
-    return /^0[2-9]\d{8}$/.test(telephone);
+export const validateTelephone = (telephone: string|null): boolean => {
+    return !telephone ? false : /^0[2-9]\d{8}$/.test(telephone);
 };
 
-export const validateCellPhone = (cellPhone: string): boolean => {
-    return /^05\d{8}$/.test(cellPhone);
+export const validateCellPhone = (cellPhone: string|null): boolean => {
+    return !cellPhone ? false : /^05\d{8}$/.test(cellPhone);
 };
 
 export const validateEmail = (email: string): boolean => {

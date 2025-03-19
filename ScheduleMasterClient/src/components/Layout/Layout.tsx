@@ -1,11 +1,15 @@
 import Header from "./Header"
 import Section from "./Section"
+import SideToolsBar from "./SideToolsBar"
 
-export const Layout = () =>{
-    return(
-        <div style={{display:'flex', flexDirection:'column'}}>
-            <Header />
-            <Section />
+export const Layout = () => {
+    return (
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <SideToolsBar />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Header />
+                <Section />
+            </div>
         </div>
     )
 }
