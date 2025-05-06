@@ -34,7 +34,6 @@ export default function Header() {
                 setActiveIndex(e.index);
                 menuItems[e.index].command?.();
             }}
-            className="menu"
         />
     );
 
