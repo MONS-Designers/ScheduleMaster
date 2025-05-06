@@ -6,7 +6,7 @@ export const Layout = () => {
     return (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
             <SideToolsBar />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100vw' }}>
                 <Header />
                 <Section />
             </div>

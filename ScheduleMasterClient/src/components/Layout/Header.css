@@ -10,8 +10,8 @@
 }
 
 .tool-bar {
-    border-radius: '8rem';
-    background-image: 'linear-gradient(to right, var(--blue-600), var(--yellow-700), var(--pink-200))';
-    height: '4rem';
-    flex-wrap: 'nowrap';
+    background-image: linear-gradient(to right, #1c80cfb5, #ffb50047, #f69ebc4a);
+    height: 4rem;
+    flex-wrap: nowrap;
+    height: 10vh;
 }

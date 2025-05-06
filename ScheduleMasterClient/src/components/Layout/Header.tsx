@@ -28,9 +28,7 @@ export default function Header() {
     const endContent = (
         <>
              <div className="flex align-items-center gap-2" style={{minWidth: '15vw'}}>
-               {/* <button className="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200">
-                    <i className="pi pi-users text-2xl">Teachers</i>
-                </button>*/}
+                    <i className="pi pi-user text-2xl" /> Hello user!
             </div> 
         </>
     );

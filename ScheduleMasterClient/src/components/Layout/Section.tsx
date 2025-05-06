@@ -3,7 +3,7 @@ import { Outlet } from 'react-router';
 
 const Section = () => {
     return (
-        <Card style={{minHeight: '80vh', maxWidth: '95vw'}}>
+        <Card style={{minHeight: '80vh'}}>
             <Outlet />
         </Card>
     );
