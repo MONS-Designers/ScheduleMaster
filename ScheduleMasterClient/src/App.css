@@ -14,4 +14,9 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: transform 0.3s ease;
+  margin: 0px;
+}
+
+button:focus, .focused-button{
+  background-color: #ffb50047;
 }

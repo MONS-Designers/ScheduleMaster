@@ -1,13 +1,23 @@
-
+import { useState } from 'react';
 import { Toolbar } from 'primereact/toolbar';
 import Logo from '../logoComponent/Logo';
 import { Button } from 'primereact/button';
 import '../../assets/styles/button.css';
 import './Header.css';
 import { useNavigate } from 'react-router-dom';
+import { TabMenu } from 'primereact/tabmenu';
 
 export default function Header() {
     const navigate = useNavigate();
+
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const menuItems = [
+        { label: 'Home', icon: 'pi pi-home', command: () => navigate('/') },
+        { label: 'Schedule', icon: 'pi pi-calendar-clock', command: () => navigate('/schedule') },
+        { label: 'Teachers', icon: 'pi pi-users', command: () => navigate('/teachers') },
+        { label: 'Tasks', icon: 'pi pi-list-check', command: () => navigate('/tasks') },
+    ];
 
     const startContent = (
         <div className='start-content'>
@@ -17,12 +27,15 @@ export default function Header() {
     );
 
     const centerContent = (
-        <div className="flex flex-wrap align-items-center">
-            <Button icon="pi pi-home" text raised rounded aria-label="Home" onClick={()=> navigate('/')} />
-            <Button icon="pi pi-calendar-clock" text raised rounded aria-label="Schedule" onClick={()=> navigate('/schedule')} />
-            <Button icon="pi pi-users" text raised rounded aria-label="Teachers" onClick={()=>navigate('/teachers')} />
-            <Button icon="pi pi-list-check" text raised rounded aria-label="Tasks" onClick={()=>navigate('/tasks')} />
-        </div>
+        <TabMenu
+            model={menuItems}
+            activeIndex={activeIndex}
+            onTabChange={(e) => {
+                setActiveIndex(e.index);
+                menuItems[e.index].command?.();
+            }}
+            className="menu"
+        />
     );
 
     const endContent = (

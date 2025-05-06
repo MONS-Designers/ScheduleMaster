@@ -15,6 +15,7 @@ const TeachersManagement = () => {
     }, []);
 
     const fetchData = async () => {
+        setLoading(true);
         try {
             const result = await teachersService.getByParametersData(1, null);
             setData(result);

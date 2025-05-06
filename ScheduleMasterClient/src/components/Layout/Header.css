@@ -15,3 +15,19 @@
     flex-wrap: nowrap;
     height: 10vh;
 }
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+    background: #ffffff00;
+    color: #104b7a;
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+    background: #ffffff00;
+    color: #2196f3;
+    border: none;
+}
+
+.p-tabmenu .p-tabmenu-nav{
+    background: #ffffff00;
+    height: 10vh;
+}
