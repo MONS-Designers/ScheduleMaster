@@ -1,0 +1,27 @@
+.Incomplete{
+    color: var(--red-500);
+}
+
+.Completed{
+    color: var(--green-500);
+}
+
+.Unknown{
+    color: var(--gray-300);
+}
+
+.p-datatable .p-datatable-tbody > tr > td{
+    text-align: center;
+}
+
+.p-datatable .p-column-header-content{
+    justify-content: center;
+}
+
+.priority{
+    width: max-content;
+}
+
+.bold-title{
+    font-weight: bold;
+}

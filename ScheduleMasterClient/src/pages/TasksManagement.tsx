@@ -4,9 +4,14 @@ import DailyViewTasks from "../components/tasks/DailyViewTasks";
 import { Button } from "primereact/button";
 import ListViewTasks from "../components/tasks/ListViewTasks";
 import WeeklyViewTasks from "../components/tasks/WeeklyViewTasks";
+import { SelectButton } from "primereact/selectbutton";
 
 type ViewMode = "daily" | "weekly" | "list";
-
+const ViewModeOptions = [
+    { icon: 'pi pi-list', value: 'list' },
+    { icon: 'pi pi-calendar-times', value: 'daily' },
+    { icon: 'pi pi-calendar', value: 'weekly' }
+];
 // interface Props {
 //   tasks: ITaskDTO[];
 //   onUpdate: (updatedTask: ITaskDTO) => void;
@@ -18,9 +23,31 @@ const initialTasks: ITaskDTO[] = [
         priorityId: 2,
         startDate: "2025-05-06T10:00",
         endDate: "2025-05-06T11:00",
+        isComplete: true,
+        description: "Initial task",
+        noteContent: 'this is the note',
+        title: "Review Code",
+        isActive: true,
+    },
+    {
+        id: 2,
+        priorityId: 1,
+        startDate: "2025-05-06T10:00",
+        endDate: "2025-05-06T11:00",
         isComplete: false,
         description: "Initial task",
-        noteContent: '1',
+        noteContent: 'this is the note',
+        title: "Review Code",
+        isActive: true,
+    },
+    {
+        id: 3,
+        priorityId: 3,
+        startDate: "2025-05-06T10:00",
+        endDate: "2025-05-06T11:00",
+        isComplete: false,
+        description: "Initial task",
+        noteContent: 'this is the note',
         title: "Review Code",
         isActive: true,
     },
@@ -28,7 +55,11 @@ const initialTasks: ITaskDTO[] = [
 
 const TasksManagement = (/*{ tasks, onUpdate }*/) => {
     const [tasks, onUpdate] = useState(initialTasks);
-    const [view, setView] = useState<ViewMode>("daily");
+    const [view, setView] = useState<ViewMode>('list');
+
+    const viewModeTemplate = (option: { icon: string | undefined; }) => {
+        return <i className={option.icon}></i>;
+    }
 
     const handleFieldChange = (id: number, field: keyof ITaskDTO, value: any) => {
         const updated = tasks.map(task =>
@@ -41,15 +72,13 @@ const TasksManagement = (/*{ tasks, onUpdate }*/) => {
     return (
         <div className="p-4">
             <h1 className='gradient-text'>Tasks</h1>
-            <div className="flex gap-2 m-4">
-                <Button icon="pi pi-calendar" text raised rounded aria-label="Daily" onClick={() => setView("daily")} tooltip="Daily View" />
-                <Button icon="pi pi-calendar-times" text raised rounded aria-label="Weekly" onClick={() => setView("weekly")} tooltip="Weekly View" />
-                <Button icon="pi pi-list" text raised rounded aria-label="List" onClick={() => setView("list")} tooltip="List View" />
-            </div>
+            <SelectButton value={view} onChange={(e) => setView(e.value)} itemTemplate={viewModeTemplate} optionLabel="value" options={ViewModeOptions} />
 
-            {view === "daily" && <DailyViewTasks tasks={tasks} onUpdate={() => { }} />}
-            {view === "weekly" && <WeeklyViewTasks tasks={tasks} onUpdate={() => { }} />}
-            {view === "list" && <ListViewTasks tasks={tasks} onUpdate={() => { }} />}
+            {tasks && tasks.length > 0 && <div>
+                {view === "daily" && <DailyViewTasks tasks={tasks} onUpdate={() => { }} />}
+                {view === "weekly" && <WeeklyViewTasks tasks={tasks} onUpdate={() => { }} />}
+                {view === "list" && <ListViewTasks tasks={tasks} onUpdate={() => { }} />}
+            </div>}
         </div>
     );
 };
