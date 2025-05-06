@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Toolbar } from 'primereact/toolbar';
 import Logo from '../logoComponent/Logo';
-import { Button } from 'primereact/button';
 import '../../assets/styles/button.css';
 import './Header.css';
 import { useNavigate } from 'react-router-dom';
