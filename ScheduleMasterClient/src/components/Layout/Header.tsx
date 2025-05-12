@@ -38,15 +38,16 @@ export default function Header() {
 
     const endContent = (
         <>
-             <div className="flex align-items-center gap-2" style={{minWidth: '15vw'}}>
-                    <i className="pi pi-user text-2xl" /> Hello user!
-            </div> 
+            <div style={{ minWidth: '15vw' }}>
+                <div className='username'><i className="pi pi-user" /><span> Hello user!</span></div>
+                <div className='school-name'><span> school name</span></div>
+            </div>
         </>
     );
 
     return (
         <div className="card">
-            <Toolbar start={startContent} center={centerContent} end={endContent} className="bg-gray-900 shadow-2 tool-bar"/>
+            <Toolbar start={startContent} center={centerContent} end={endContent} className="bg-gray-900 shadow-2 tool-bar" />
         </div>
     );
 }

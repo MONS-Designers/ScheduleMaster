@@ -1,0 +1,11 @@
+.p-button-group .p-button{
+    border: 1px solid #ced4da;
+    border-radius: 100px;
+    margin-right: 0.5vw;
+    height: 50px;
+    width: 50px;
+}
+
+.select-view-buttons{
+    display: flex;
+}

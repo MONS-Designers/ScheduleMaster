@@ -17,6 +17,7 @@
   margin: 0px;
 }
 
-button:focus, .focused-button{
+button:focus, .focused-button, .p-selectbutton .p-button.p-highlight{
   background-color: #ffb50047;
+  color: #156faa;
 }

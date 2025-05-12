@@ -31,3 +31,12 @@
     background: #ffffff00;
     height: 10vh;
 }
+
+.username{
+    font-weight: bold;
+}
+
+.school-name{
+    font-weight: lighter;
+    color: var(--primary-color);
+}
